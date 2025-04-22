@@ -5,6 +5,7 @@ import type React from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import "../styles/globals.css";
 import {
   Search,
   Globe,
@@ -19,6 +20,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { QuoteModal } from "@/components/quote-modal";
 import industry from "../public/industry.jpg";
+
+import img1 from "../public/img1.jpg";
+import img2 from "../public/img2.jpg";
+import img3 from "../public/img3.jpg";
+import img4 from "../public/img4.jpg";
 
 export default function Home() {
   const [showQuoteModal, setShowQuoteModal] = useState(false);
@@ -134,7 +140,7 @@ export default function Home() {
                 alt="The Next Generation of Sourcing"
                 width={800}
                 height={800}
-                className="object-contain"
+                className="obj_fit"
                 priority
               />
             </div>
@@ -287,7 +293,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4">
               <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=400&width=400&text=Textiles"
+                  src={img1}
                   alt="Textiles"
                   width={400}
                   height={400}
@@ -296,7 +302,7 @@ export default function Home() {
               </div>
               <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=400&width=400&text=Electronics"
+                  src={img2}
                   alt="Electronics"
                   width={400}
                   height={400}
@@ -305,7 +311,7 @@ export default function Home() {
               </div>
               <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=400&width=400&text=Furniture"
+                  src={img3}
                   alt="Furniture"
                   width={400}
                   height={400}
@@ -314,7 +320,7 @@ export default function Home() {
               </div>
               <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=400&width=400&text=Automotive"
+                  src={img4}
                   alt="Automotive"
                   width={400}
                   height={400}
