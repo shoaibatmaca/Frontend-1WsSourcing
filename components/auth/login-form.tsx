@@ -1,69 +1,74 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Eye, EyeOff } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function LoginForm() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-  
+    e.preventDefault();
+    setIsLoading(true);
+
     try {
-      const res = await fetch("http://localhost:8000/auth/jwt/create/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      })
-  
-      const data = await res.json()
-  
-      if (data.access) {
-        localStorage.setItem("accessToken", data.access)
-        localStorage.setItem("refreshToken", data.refresh)
-  
-        // Finalize quote if any
-        await fetch("http://localhost:8000/quote/finalize/", {
+      const res = await fetch(
+        "https://1wsbackend-production.up.railway.app/auth/jwt/create/",
+        {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT  ${data.access}`,
-          },
-        })
-  
-        router.push("/dashboard")
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.access) {
+        localStorage.setItem("accessToken", data.access);
+        localStorage.setItem("refreshToken", data.refresh);
+
+        // Finalize quote if any
+        await fetch(
+          "https://1wsbackend-production.up.railway.app/quote/finalize/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `JWT  ${data.access}`,
+            },
+          }
+        );
+
+        router.push("/dashboard");
       } else {
-        alert("Invalid credentials")
+        alert("Invalid credentials");
       }
     } catch (error) {
-      console.error("Login error:", error)
-      alert("Something went wrong")
+      console.error("Login error:", error);
+      alert("Something went wrong");
     }
-  
-    setIsLoading(false)
-  }
-  
+
+    setIsLoading(false);
+  };
 
   return (
     <div className="w-full max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-200">
@@ -93,7 +98,10 @@ export function LoginForm() {
             <label htmlFor="password" className="text-sm font-medium">
               Password
             </label>
-            <Link href="/auth/forgot-password" className="text-sm text-gray-600 hover:text-black">
+            <Link
+              href="/auth/forgot-password"
+              className="text-sm text-gray-600 hover:text-black"
+            >
               Forgot password?
             </Link>
           </div>
@@ -135,5 +143,5 @@ export function LoginForm() {
         </p>
       </div>
     </div>
-  )
+  );
 }
