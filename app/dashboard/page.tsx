@@ -39,11 +39,14 @@ export default function Dashboard() {
       const token = localStorage.getItem("accessToken");
       if (!token) return;
 
-      const res = await fetch("http://localhost:8000/auth/users/me/", {
-        headers: {
-          Authorization: `JWT ${token}`,
-        },
-      });
+      const res = await fetch(
+        "https://1wsbackend-production.up.railway.app/auth/users/me/",
+        {
+          headers: {
+            Authorization: `JWT ${token}`,
+          },
+        }
+      );
 
       if (res.ok) {
         const data = await res.json();

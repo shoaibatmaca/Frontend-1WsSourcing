@@ -28,7 +28,7 @@
 //     const fetchMessages = async () => {
 //       try {
 //         const res = await fetch(
-//           `http://localhost:8000/quotes/${quoteId}/messages/`,
+//           `https://1wsbackend-production.up.railway.app/quotes/${quoteId}/messages/`,
 //           {
 //             headers: {
 //               Authorization: `JWT ${accessToken}`,
@@ -61,7 +61,7 @@
 
 //     try {
 //       const res = await fetch(
-//         `http://localhost:8000/quotes/${quoteId}/messages/`,
+//         `https://1wsbackend-production.up.railway.app/quotes/${quoteId}/messages/`,
 //         {
 //           method: "POST",
 //           headers: {
@@ -138,9 +138,12 @@
 // }
 
 export const fetchQuoteMessages = async (quoteId: string, token: string) => {
-  const res = await fetch(`http://localhost:8000/quotes/${quoteId}/messages/`, {
-    headers: { Authorization: `JWT ${token}` },
-  });
+  const res = await fetch(
+    `https://1wsbackend-production.up.railway.app/quotes/${quoteId}/messages/`,
+    {
+      headers: { Authorization: `JWT ${token}` },
+    }
+  );
 
   if (!res.ok) throw new Error("Failed to fetch messages");
   return res.json();

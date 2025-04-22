@@ -12,7 +12,7 @@
 //       const token = localStorage.getItem("accessToken");
 //       try {
 //         const res = await fetch(
-//           `http://localhost:8000/quotes/${quoteId}/timeline/`,
+//           `https://1wsbackend-production.up.railway.app/quotes/${quoteId}/timeline/`,
 //           {
 //             headers: { Authorization: `JWT ${token}` },
 //           }
@@ -52,7 +52,7 @@ export default function useQuoteTimeline(quoteId: string | null) {
       const token = localStorage.getItem("accessToken");
       try {
         const res = await fetch(
-          `http://localhost:8000/quotes/${quoteId}/timeline/`,
+          `https://1wsbackend-production.up.railway.app/quotes/${quoteId}/timeline/`,
           {
             headers: { Authorization: `JWT ${token}` },
           }

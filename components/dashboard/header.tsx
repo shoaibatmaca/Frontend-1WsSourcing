@@ -102,11 +102,14 @@ export function DashboardHeader() {
       }
 
       try {
-        const res = await fetch("http://localhost:8000/auth/users/me/", {
-          headers: {
-            Authorization: `JWT ${token}`, // 🛠️ Corrected this line
-          },
-        });
+        const res = await fetch(
+          "https://1wsbackend-production.up.railway.app/auth/users/me/",
+          {
+            headers: {
+              Authorization: `JWT ${token}`, // 🛠️ Corrected this line
+            },
+          }
+        );
 
         if (res.ok) {
           const data = await res.json();

@@ -1925,7 +1925,7 @@ export default function MessagesPage() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/messages/${activeConversation.id}/`, // ✅ Dynamic URL
+        `https://1wsbackend-production.up.railway.app/api/messages/${activeConversation.id}/`, // ✅ Dynamic URL
         {
           method: "POST",
           headers: {

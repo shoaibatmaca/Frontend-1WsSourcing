@@ -525,7 +525,7 @@
 //     uploadedFiles.forEach((file) => data.append("attachments", file));
 
 //     try {
-//       const res = await fetch("http://localhost:8000/quotes/create/", {
+//       const res = await fetch("https://1wsbackend-production.up.railway.app/quotes/create/", {
 //         method: "POST",
 //         headers: {
 //           Authorization: `JWT ${token}`,
@@ -858,14 +858,17 @@ export default function QuotesPage() {
     uploadedFiles.forEach((file) => data.append("attachments", file));
 
     try {
-      const res = await fetch("http://localhost:8000/quotes/create/", {
-        method: "POST",
-        headers: {
-          Authorization: `JWT ${token}`,
-          Accept: "application/json",
-        },
-        body: data,
-      });
+      const res = await fetch(
+        "https://1wsbackend-production.up.railway.app/quotes/create/",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `JWT ${token}`,
+            Accept: "application/json",
+          },
+          body: data,
+        }
+      );
 
       const result = await res.json();
 

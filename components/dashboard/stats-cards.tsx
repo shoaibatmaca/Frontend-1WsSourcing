@@ -124,11 +124,14 @@ export function StatsCards() {
   useEffect(() => {
     const fetchStats = async () => {
       const token = localStorage.getItem("accessToken");
-      const res = await fetch("http://localhost:8000/api/dashboard/stats/", {
-        headers: {
-          Authorization: `JWT ${token}`,
-        },
-      });
+      const res = await fetch(
+        "https://1wsbackend-production.up.railway.app/api/dashboard/stats/",
+        {
+          headers: {
+            Authorization: `JWT ${token}`,
+          },
+        }
+      );
       const data = await res.json();
       setStats(data);
     };

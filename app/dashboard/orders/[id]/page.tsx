@@ -2409,7 +2409,7 @@ export default function OrderDetailPage({
   const fetchMessages = async () => {
     const token = localStorage.getItem("accessToken");
     const res = await fetch(
-      `http://localhost:8000/api/orders/${id}/messages/`,
+      `https://1wsbackend-production.up.railway.app/api/orders/${id}/messages/`,
       {
         headers: { Authorization: `JWT ${token}` },
       }
@@ -2425,9 +2425,12 @@ export default function OrderDetailPage({
   useEffect(() => {
     const fetchOrder = async () => {
       const token = localStorage.getItem("accessToken");
-      const res = await fetch(`http://localhost:8000/orders/${id}/`, {
-        headers: { Authorization: `JWT ${token}` },
-      });
+      const res = await fetch(
+        `https://1wsbackend-production.up.railway.app/orders/${id}/`,
+        {
+          headers: { Authorization: `JWT ${token}` },
+        }
+      );
       const data = await res.json();
       setOrder(data);
     };
@@ -2457,7 +2460,7 @@ export default function OrderDetailPage({
   const sendMessage = async () => {
     const token = localStorage.getItem("accessToken");
     const res = await fetch(
-      `http://localhost:8000/api/orders/${id}/messages/`,
+      `https://1wsbackend-production.up.railway.app/api/orders/${id}/messages/`,
       {
         method: "POST",
         headers: {

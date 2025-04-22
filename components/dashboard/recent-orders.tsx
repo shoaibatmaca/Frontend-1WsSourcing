@@ -43,12 +43,15 @@ export function RecentOrders() {
       }
 
       try {
-        const res = await fetch("http://localhost:8000/orders/my/", {
-          headers: {
-            Authorization: `JWT ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          "https://1wsbackend-production.up.railway.app/orders/my/",
+          {
+            headers: {
+              Authorization: `JWT ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!res.ok) {
           const errorText = await res.text();
