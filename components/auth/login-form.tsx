@@ -32,11 +32,15 @@ export function LoginForm() {
         "https://1wsbackend-production.up.railway.app/auth/jwt/create/",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken") || "",
+          },
           body: JSON.stringify({
             email: formData.email,
             password: formData.password,
           }),
+          credentials: "include",
         }
       );
 
@@ -54,7 +58,9 @@ export function LoginForm() {
             headers: {
               "Content-Type": "application/json",
               Authorization: `JWT  ${data.access}`,
+              "X-CSRFToken": getCookie("csrftoken") || "",
             },
+            credentials: "include",
           }
         );
 
@@ -69,6 +75,14 @@ export function LoginForm() {
 
     setIsLoading(false);
   };
+
+  function getCookie(name: string): string | null {
+    if (typeof document === "undefined") return null;
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(name + "="));
+    return cookieValue ? decodeURIComponent(cookieValue.split("=")[1]) : null;
+  }
 
   return (
     <div className="w-full max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-200">

@@ -29,6 +29,13 @@ export function SignupForm({ quoteData }: SignupFormProps) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  function getCookie(name: string): string | null {
+    if (typeof document === "undefined") return null;
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(name + "="));
+    return cookieValue ? decodeURIComponent(cookieValue.split("=")[1]) : null;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,6 +63,7 @@ export function SignupForm({ quoteData }: SignupFormProps) {
             last_name: formData.name.split(" ").slice(1).join(" ") || "",
             company: formData.company,
           }),
+          credentials: "include",
         }
       );
 
@@ -72,11 +80,15 @@ export function SignupForm({ quoteData }: SignupFormProps) {
         "https://1wsbackend-production.up.railway.app/auth/jwt/create/",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken") || "",
+          },
           body: JSON.stringify({
             email: formData.email,
             password: formData.password,
           }),
+          credentials: "include",
         }
       );
 
