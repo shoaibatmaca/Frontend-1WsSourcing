@@ -926,6 +926,7 @@ export default function QuotesPage() {
         <form
           onSubmit={handleSubmit}
           className="bg-white border rounded-md p-6 space-y-6"
+          encType="multipart/form-data" // Ensure the form can handle file uploads
         >
           <h2 className="text-lg font-semibold mb-4">Request a New Quote</h2>
 
