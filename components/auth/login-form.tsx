@@ -57,7 +57,7 @@ export function LoginForm() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `JWT  ${data.access}`,
+              Authorization: `JWT ${data.access}`,
               "X-CSRFToken": getCookie("csrftoken") || "",
             },
             credentials: "include",
