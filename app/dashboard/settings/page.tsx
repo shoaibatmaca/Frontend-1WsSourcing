@@ -1288,7 +1288,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 
-const API_BASE = "https://1wsbackend-production.up.railway.app/";
+const API_BASE = "https://1wsbackend-production.up.railway.app";
 const getToken = () => localStorage.getItem("accessToken");
 
 export default function SettingsPage() {
