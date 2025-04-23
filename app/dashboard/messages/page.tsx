@@ -1822,7 +1822,7 @@ export default function MessagesPage() {
     const token = localStorage.getItem("accessToken");
     if (token) {
       axios
-        .get("http://127.0.0.1:8000/auth/users/me/", {
+        .get("https://1wsbackend-production.up.railway.app/auth/users/me/", {
           headers: { Authorization: `JWT ${token}` },
         })
         .then((res) => {
@@ -1837,11 +1837,14 @@ export default function MessagesPage() {
 
     if (storedToken) {
       axios
-        .get("http://127.0.0.1:8000/api/messages/inbox/", {
-          headers: {
-            Authorization: `JWT ${storedToken}`,
-          },
-        })
+        .get(
+          "https://1wsbackend-production.up.railway.app/api/messages/inbox/",
+          {
+            headers: {
+              Authorization: `JWT ${storedToken}`,
+            },
+          }
+        )
         .then((res) => {
           setConversations(res.data);
           if (res.data.length > 0) {
@@ -1856,11 +1859,14 @@ export default function MessagesPage() {
   const fetchMessages = (conversationId: number, token: string | null) => {
     if (!token) return;
     axios
-      .get(`http://127.0.0.1:8000/api/messages/${conversationId}/`, {
-        headers: {
-          Authorization: `JWT ${token}`,
-        },
-      })
+      .get(
+        `https://1wsbackend-production.up.railway.app/api/messages/${conversationId}/`,
+        {
+          headers: {
+            Authorization: `JWT ${token}`,
+          },
+        }
+      )
       .then((res) => {
         setActiveConversation((prev: any) => ({ ...prev, messages: res.data }));
       })
