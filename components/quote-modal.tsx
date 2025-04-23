@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { X, Upload } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { X, Upload } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface QuoteModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onSubmit: (data: any) => void
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (data: any) => void;
 }
 
 export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
-  const router = useRouter()
-  const [activeTab, setActiveTab] = useState("product")
-  const [shipToDoor, setShipToDoor] = useState(false)
-  const [files, setFiles] = useState<File[]>([])
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState("product");
+  const [shipToDoor, setShipToDoor] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,41 +43,47 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
     shipmentDestination: "port",
     doorAddress: "",
     shipmentDetails: "",
-  })
+  });
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-  
+    e.preventDefault();
+
     try {
       // Save to localStorage so we can use it on signup page
-      localStorage.setItem("quoteData", JSON.stringify(formData))
-  
+      localStorage.setItem("quoteData", JSON.stringify(formData));
+
       // Send to backend to temporarily store in session
-      await fetch("http://localhost:8000/quote/temp-save/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // important for session
-        body: JSON.stringify(formData),
-      })
-  
+      await fetch(
+        "https://1wsbackend-production.up.railway.app/quote/temp-save/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // important for session
+          body: JSON.stringify(formData),
+        }
+      );
+
       // Close modal and redirect to signup
-      onClose()
-      router.push("/auth/signup")
+      onClose();
+      router.push("/auth/signup");
     } catch (error) {
-      console.error("Error submitting quote:", error)
-      alert("Something went wrong. Please try again.")
+      console.error("Error submitting quote:", error);
+      alert("Something went wrong. Please try again.");
     }
-  }
-  
+  };
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
@@ -91,7 +97,11 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6">
-          <Tabs defaultValue="product" className="w-full" onValueChange={setActiveTab}>
+          <Tabs
+            defaultValue="product"
+            className="w-full"
+            onValueChange={setActiveTab}
+          >
             <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="product">Product Details</TabsTrigger>
               <TabsTrigger value="shipping">Shipping Information</TabsTrigger>
@@ -196,14 +206,26 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
                 <Label>Samples (Upload Images)</Label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                  <p className="mt-2 text-sm text-gray-500">Drag and drop image files here, or click to select files</p>
-                  <p className="mt-1 text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
-                  <Input type="file" className="hidden" id="file-upload" multiple accept="image/*" />
+                  <p className="mt-2 text-sm text-gray-500">
+                    Drag and drop image files here, or click to select files
+                  </p>
+                  <p className="mt-1 text-xs text-gray-400">
+                    PNG, JPG, GIF up to 10MB
+                  </p>
+                  <Input
+                    type="file"
+                    className="hidden"
+                    id="file-upload"
+                    multiple
+                    accept="image/*"
+                  />
                   <Button
                     type="button"
                     variant="outline"
                     className="mt-4"
-                    onClick={() => document.getElementById("file-upload")?.click()}
+                    onClick={() =>
+                      document.getElementById("file-upload")?.click()
+                    }
                   >
                     Select Files
                   </Button>
@@ -233,7 +255,9 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="destinationCountry">Destination Country</Label>
+                  <Label htmlFor="destinationCountry">
+                    Destination Country
+                  </Label>
                   <Input
                     id="destinationCountry"
                     name="destinationCountry"
@@ -252,7 +276,9 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
                   >
                     <option value="">Select shipment terms</option>
                     <option value="fob">FOB (Free On Board)</option>
-                    <option value="cif">CIF (Cost, Insurance, and Freight)</option>
+                    <option value="cif">
+                      CIF (Cost, Insurance, and Freight)
+                    </option>
                     <option value="exw">EXW (Ex Works)</option>
                     <option value="ddp">DDP (Delivered Duty Paid)</option>
                     <option value="cfr">CFR (Cost and Freight)</option>
@@ -270,7 +296,9 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
                     <option value="tt">T/T (Telegraphic Transfer)</option>
                     <option value="lc">L/C (Letter of Credit)</option>
                     <option value="dp">D/P (Documents against Payment)</option>
-                    <option value="da">D/A (Documents against Acceptance)</option>
+                    <option value="da">
+                      D/A (Documents against Acceptance)
+                    </option>
                     <option value="paypal">PayPal</option>
                   </select>
                 </div>
@@ -283,7 +311,9 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
                   className="flex space-x-4"
                   name="shipmentMethod"
                   value={formData.shipmentMethod}
-                  onValueChange={(value) => setFormData((prev) => ({ ...prev, shipmentMethod: value }))}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, shipmentMethod: value }))
+                  }
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="sea" id="sea" />
@@ -304,8 +334,11 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
                   name="shipmentDestination"
                   value={formData.shipmentDestination}
                   onValueChange={(value) => {
-                    setFormData((prev) => ({ ...prev, shipmentDestination: value }))
-                    setShipToDoor(value === "door")
+                    setFormData((prev) => ({
+                      ...prev,
+                      shipmentDestination: value,
+                    }));
+                    setShipToDoor(value === "door");
                   }}
                 >
                   <div className="flex items-center space-x-2">
@@ -346,7 +379,11 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
               </div>
 
               <div className="flex justify-between pt-4">
-                <Button type="button" variant="outline" onClick={() => setActiveTab("product")}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setActiveTab("product")}
+                >
                   Back to Product Details
                 </Button>
                 <Button type="submit">Submit Quote Request</Button>
@@ -356,5 +393,5 @@ export function QuoteModal({ isOpen, onClose, onSubmit }: QuoteModalProps) {
         </form>
       </div>
     </div>
-  )
+  );
 }
