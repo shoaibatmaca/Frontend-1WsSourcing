@@ -25,7 +25,7 @@ export function useSuppliers() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/suppliers/", {
+    fetch("https://1wsbackend-production.up.railway.app/suppliers/", {
       headers: {
         Accept: "application/json",
       },

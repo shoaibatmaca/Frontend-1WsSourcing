@@ -2844,7 +2844,7 @@ export default function QuoteDetailPage() {
   const fetchMessages = async (conversationId: number, token: string) => {
     try {
       const res = await fetch(
-        `http://localhost:8000/api/messages/${conversationId}/`,
+        `https://1wsbackend-production.up.railway.app/api/messages/${conversationId}/`,
         {
           headers: { Authorization: `JWT ${token}` },
         }
@@ -2874,7 +2874,7 @@ export default function QuoteDetailPage() {
       let convId = conversationId;
       if (!convId && quote?.id) {
         const convRes = await fetch(
-          `http://localhost:8000/api/quotes/${quote.id}/conversation/`,
+          `https://1wsbackend-production.up.railway.app/quotes/${quote.id}/conversation/`,
           {
             method: "POST",
             headers: {
@@ -2888,14 +2888,17 @@ export default function QuoteDetailPage() {
         setConversationId(convId);
       }
 
-      const res = await fetch(`http://localhost:8000/api/messages/${convId}/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${token}`,
-        },
-        body: JSON.stringify({ content: newMessage }),
-      });
+      const res = await fetch(
+        `https://1wsbackend-production.up.railway.app/api/messages/${convId}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${token}`,
+          },
+          body: JSON.stringify({ content: newMessage }),
+        }
+      );
 
       if (res.ok) {
         setNewMessage("");
@@ -2917,9 +2920,12 @@ export default function QuoteDetailPage() {
     const fetchQuote = async () => {
       const token = localStorage.getItem("accessToken");
       try {
-        const res = await fetch(`http://localhost:8000/quotes/${id}/`, {
-          headers: { Authorization: `JWT ${token}` },
-        });
+        const res = await fetch(
+          `https://1wsbackend-production.up.railway.app/quotes/${id}/`,
+          {
+            headers: { Authorization: `JWT ${token}` },
+          }
+        );
 
         const contentType = res.headers.get("Content-Type");
         if (!res.ok) {
@@ -2939,9 +2945,12 @@ export default function QuoteDetailPage() {
             setConversationId(convId); // ✅ Only set — fetching is handled separately
           }
 
-          const userRes = await fetch(`http://localhost:8000/auth/users/me/`, {
-            headers: { Authorization: `JWT ${token}` },
-          });
+          const userRes = await fetch(
+            `https://1wsbackend-production.up.railway.app/auth/users/me/`,
+            {
+              headers: { Authorization: `JWT ${token}` },
+            }
+          );
           if (userRes.ok) {
             const user = await userRes.json();
             setCurrentUser(user);
@@ -3139,7 +3148,7 @@ export default function QuoteDetailPage() {
       const token = localStorage.getItem("accessToken");
 
       const res = await fetch(
-        `http://localhost:8000/quotes/${quote.id}/unlock-supplier/`,
+        `https://1wsbackend-production.up.railway.app/quotes/${quote.id}/unlock-supplier/`,
         {
           method: "POST",
           headers: {
