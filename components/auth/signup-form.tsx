@@ -107,6 +107,7 @@ export function SignupForm({ quoteData }: SignupFormProps) {
               Authorization: `JWT ${loginData.access}`,
             },
             credentials: "include", // important!
+            body: JSON.stringify({}), //  required even if empty
           }
         );
 
